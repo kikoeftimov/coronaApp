@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <!--<link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>-->
+    <!--<script src="/static/js/bootstrap.js" type="application/javascript"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/esm/popper-utils.js"></script>-->
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/home">Coronavirus app</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+
+
+        </div>
+    </div>
+    <ul class="navbar-nav">
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" sec:authentication="name"></a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/logout">Log out</a>
+        </li>
+        <li class="nav-item" sec:authorize="!isAuthenticated()">
+            <a class="nav-link" href="/login">Log in</a>
+        </li>
+    </ul>
+</nav>
+<br>
+<br>
+
+<div th:if="${param.message}">
+    <h2 class="text-center text-primary" th:text="${param.message}"></h2>
+</div>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form action="/home"
+                  method="post"
+                  enctype="multipart/form-data"
+                  th:object="${info}">
+                <input type="text" hidden="hidden" name="id" th:value="${info.getId()}">
+                <div class="form-group">
+                    <label for="temperature">Temperature</label>
+                    <input type="text"
+                           class="form-control"
+                           th:value="${info.getTemperature()}"
+                           id="temperature"
+                           name="temperature"
+                           th:field="*{temperature}"
+                           required
+                           placeholder="Enter your temperature">
+                </div>
+
+                <div class="form-check">
+                    <label for="cough" class="form-check-label"  style="margin-right: 35px;">Are you having dry cough?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isCough()}"
+                           id="cough"
+                           th:field="*{cough}"
+                           name="cough">
+                </div>
+
+                <div class="form-check">
+                    <label for="tired" class="form-check-label" style="margin-right: 35px;">Are you feeling unusual tiredness?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isTired()}"
+                           id="tired"
+                           th:field="*{tired}"
+                           name="tired">
+                </div>
+
+                <div class="form-check">
+                    <label for="chestPain" class="form-check-label" style="margin-right: 35px;">Are you having unusual chest pain?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isChestPain()}"
+                           id="chestPain"
+                           th:field="*{chestPain}"
+                           name="chestPain">
+                </div>
+
+                <div class="form-check">
+                    <label for="headache" class="form-check-label" style="margin-right: 35px;">Are you having headache?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isHeadache()}"
+                           id="headache"
+                           th:field="*{headache}"
+                           name="headache">
+                </div>
+
+                <div class="form-group">
+                    <label for="lostOfTaste" class="form-check-label" style="margin-right: 35px;">Are you losing your taste in the last days?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isLostOfTaste()}"
+                           id="lostOfTaste"
+                           th:field="*{lostOfTaste}"
+                           name="lostOfTaste">
+                </div>
+
+                <div class="form-check">
+                    <label for="difficultBreathing" class="form-check-label" style="margin-right: 35px;">Are you having difficulties with breathing in the last days?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isDifficultBreathing()}"
+                           id="difficultBreathing"
+                           th:field="*{difficultBreathing}"
+                           name="difficultBreathing">
+                </div>
+
+
+                <div class="form-check">
+                    <label for="soreThroat" class="form-check-label" style="margin-right: 35px;">Are you having sore throat in the last days?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isSoreThroat()}"
+                           id="soreThroat"
+                           th:field="*{soreThroat}"
+                           name="soreThroat">
+                </div>
+
+
+                <div class="form-check">
+                    <label for="haveBeenAbroad" class="form-check-label" style="margin-right: 35px;">Have you been abroad in the last month?</label>
+                    <input type="checkbox"
+                           class="form-check-input"
+                           th:value="${info.isHaveBeenAbroad()}"
+                           id="haveBeenAbroad"
+                           th:field="*{haveBeenAbroad}"
+                           name="haveBeenAbroad">
+                </div>
+
+                <br>
+                <br>
+
+
+                <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Submit</button>
+                <a type="button" class="btn btn-success" href="/home" style="margin-left: 20px;">Back</a>
+            </form>
+        </div>
+        <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-5 col-sm-5">
+            <img src="https://images.yourstory.com/cs/2/11718bd02d6d11e9aa979329348d4c3e/shutterstock1660430236-1584799326149.png?fm=png&auto=format"
+            style="max-width: 600px; max-height: 600px;">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
